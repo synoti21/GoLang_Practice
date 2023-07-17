@@ -1,2 +1,2 @@
-# GoLang_Drill
-GoLang Drill with algorithms, toy projects, etc.
+# GoLang_Practice
+GoLang Practice with algorithms, toy projects, etc.
