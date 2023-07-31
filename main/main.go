@@ -3,47 +3,35 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 )
 
 func main() {
-	var target string
-	var freq = map[int]int{}
-	var dup bool = false
-	var maxv int = -1
-	var maxk int = 0
+
+	cnt_z := 0
+	cnt_o := 0
 
 	reader := bufio.NewReader(os.Stdin)
 	writer := bufio.NewWriter(os.Stdout)
 	defer writer.Flush()
 
-	for i := 97; i <= 122; i++ {
-		freq[i] = 0
-	}
-
+	var target string
+	status := -1
 	fmt.Fscanln(reader, &target)
-
 	for i := 0; i < len(target); i++ {
 		temp := int(target[i])
-		if temp < 97 {
-			temp += 32
-		}
-		freq[temp] += 1
-	}
-
-	for i := 97; i <= 122; i++ {
-		if maxv == freq[i] {
-			dup = true
-		} else if freq[i] > maxv {
-			dup = false
-			maxv = freq[i]
-			maxk = i
+		if temp == 48 {
+			if status != temp {
+				cnt_z += 1
+			}
+			status = 48
+		} else {
+			if status != temp {
+				cnt_o += 1
+			}
+			status = 49
 		}
 	}
-
-	if dup {
-		fmt.Fprintln(writer, "?")
-	} else {
-		fmt.Fprintln(writer, string(maxk-32))
-	}
+	fmt.Fprintln(writer, math.Min(float64(cnt_z), float64(cnt_o)))
 }
